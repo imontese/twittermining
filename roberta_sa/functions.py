@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import re
 from constants import SEARCH_TERM
-from pull_data.functions import tweeter_data
+#from pull_data.functions import tweeter_data
 
 
 # roBERTa-base for Sentiment Analysis

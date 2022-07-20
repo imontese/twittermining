@@ -1,4 +1,4 @@
-SEARCH_TERM = "germany gas"
+SEARCH_TERM = "biden reelection"
 TWEETS_AMOUNT = 200
 
 
