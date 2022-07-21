@@ -13,9 +13,11 @@ load_dotenv(find_dotenv())
 class TweeterMining:
 
     api = 0
+    search = ''
 
-    def __init__(self, _search_term, _tweets_amount=200):
+    def __init__(self, _search_term = 0, _search_name = 0, _tweets_amount=200):
         self.search_term = _search_term
+        self.search_name = _search_name
         self.tweets_amount = _tweets_amount
         TweeterMining.authentication()
 
@@ -33,30 +35,34 @@ class TweeterMining:
 
     def mining(self):
         # use lowercases for search term
-        screen_name = 'elonmusk'
+        screen_name = self.search_name
         search_term = self.search_term
         tweet_amount = self.tweets_amount
         tweets_raw = []
         likes = []
         time = []
 
-        # return most recent status posted
-        # search by user name
-        '''
-        data = tweepy.Cursor(api.user_timeline,
-                            screen_name = screen_name,
-                            tweet_mode='extended',
-                            ).items(tweet_amount)
 
+        if screen_name != 0:
+            # return most recent status posted
+            # search by user name
+            data = tweepy.Cursor(TweeterMining.api.user_timeline,
+                                screen_name = screen_name,
+                                tweet_mode='extended',
+                                ).items(tweet_amount)
+            
+            TweeterMining.search = screen_name
 
-        # return most recent search word
-        '''
-        # search by topic
-        data = tweepy.Cursor(TweeterMining.api.search_tweets,
-                            q = search_term,
-                            lang='en',
-                            tweet_mode='extended',
-                            ).items(tweet_amount)
+        elif search_term != 0:
+            # return most recent search word
+            # search by topic
+            data = tweepy.Cursor(TweeterMining.api.search_tweets,
+                                q = search_term,
+                                lang='en',
+                                tweet_mode='extended',
+                                ).items(tweet_amount)
+
+            TweeterMining.search = search_term
 
 
         # getting data into a lists

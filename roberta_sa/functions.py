@@ -12,6 +12,8 @@ from transformers import TFAutoModelForSequenceClassification
 from transformers import AutoTokenizer, AutoConfig
 from scipy.special import softmax
 
+from pull_data.functions import TweeterMining
+
 # load model and tokenizet
 MODEL = f"cardiffnlp/twitter-roberta-base-sentiment-latest"
 tokenizer = AutoTokenizer.from_pretrained(MODEL)
@@ -82,6 +84,6 @@ def roberta_sa(tweets_raw):
     plt.xticks()
     plt.xlabel("Sentiment", fontweight='bold')
     plt.ylabel("Mean", fontweight='bold')
-    plt.title(SEARCH_TERM)
+    plt.title(TweeterMining.search)
 
     plt.show()

@@ -1,4 +1,4 @@
-SEARCH_TERM = "biden reelection"
+SEARCH_TERM = "elonmusk"
 TWEETS_AMOUNT = 200
 
 
