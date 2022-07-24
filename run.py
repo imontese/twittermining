@@ -8,9 +8,9 @@ from roberta_sa.functions import roberta_sa
 # Do this by python run.py
 
 def run():
-    tmining = TweeterMining(_search_name = c.SEARCH_TERM, _tweets_amount= c.TWEETS_AMOUNT)
+    tmining = TweeterMining(search_term = c.SEARCH_TERM, search_name=None, tweets_amount= c.TWEETS_AMOUNT)
 
-    tweets_raw = tmining.mining()
+    tweets_raw = tmining.get_tweets()
     roberta_sa(tweets_raw)
 
 

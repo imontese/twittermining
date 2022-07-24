@@ -1,4 +1,4 @@
-SEARCH_TERM = "elonmusk"
+SEARCH_TERM = "cardano"
 TWEETS_AMOUNT = 200
 
 

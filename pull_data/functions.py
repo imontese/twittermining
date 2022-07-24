@@ -1,28 +1,21 @@
 # import modules
-import os
 import tweepy
-from pull_data import *
-
-import pull_data as pull_data
+import os
 
 # env module
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
+# # TWITTER AUTHENTICATER # #
+class TwitterAuthenticator():
+    '''
+    Class for keys authentication and 
+    '''
 
-class TweeterMining:
+    def __init__(self) -> None:
+        pass
 
-    api = 0
-    search = ''
-
-    def __init__(self, _search_term = 0, _search_name = 0, _tweets_amount=200):
-        self.search_term = _search_term
-        self.search_name = _search_name
-        self.tweets_amount = _tweets_amount
-        TweeterMining.authentication()
-
-
-    def authentication():
+    def authenticate(self):
         # set online authentication
         auth = tweepy.OAuth1UserHandler(os.getenv('consumer_key'), os.getenv('consumer_secret'))
         auth.set_access_token (os.getenv('access_token'), os.getenv('access_token_secret'))
@@ -31,13 +24,32 @@ class TweeterMining:
         #auth = tweepy.OAuth2BearerHandler(os.getenv('bearer_token'))
 
         # calling the API
-        TweeterMining.api = tweepy.API(auth)
+        api = tweepy.API(auth)
 
-    def mining(self):
+        return api
+
+
+# # TWEETS RAW DATA # #
+class TweeterMining:
+    '''
+    Processing tweets searched by name or term
+    '''
+
+    search = ''
+
+    def __init__(self, search_term = None, search_name = None, tweets_amount=200):
+        self.search_term = search_term
+        self.search_name = search_name
+        self.tweets_amount = tweets_amount
+        self.twitter_authenticator = TwitterAuthenticator()
+
+
+    def get_tweets(self):
         # use lowercases for search term
         screen_name = self.search_name
         search_term = self.search_term
         tweet_amount = self.tweets_amount
+        api = self.twitter_authenticator.authenticate()
         tweets_raw = []
         likes = []
         time = []
@@ -46,7 +58,7 @@ class TweeterMining:
         if screen_name != 0:
             # return most recent status posted
             # search by user name
-            data = tweepy.Cursor(TweeterMining.api.user_timeline,
+            data = tweepy.Cursor(api.user_timeline,
                                 screen_name = screen_name,
                                 tweet_mode='extended',
                                 ).items(tweet_amount)
@@ -56,7 +68,7 @@ class TweeterMining:
         elif search_term != 0:
             # return most recent search word
             # search by topic
-            data = tweepy.Cursor(TweeterMining.api.search_tweets,
+            data = tweepy.Cursor(api.search_tweets,
                                 q = search_term,
                                 lang='en',
                                 tweet_mode='extended',
